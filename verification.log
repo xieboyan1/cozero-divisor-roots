@@ -1,0 +1,99 @@
+Lean (version 4.19.0, x86_64-w64-windows-gnu, commit 6caaee842e94, Release)
+
+mathlib release v4.19.0 (complete project source replay)
+
+The Fuchs and Mahler inputs appear as theorem parameters. See verification_zh.html.
+
+[OK] CozeroChains
+'CozeroChains.classify' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CozeroChains.chain_injective' depends on axioms: [propext]
+'CozeroChains.reversed_exponent' depends on axioms: [propext, Quot.sound]
+'CozeroChains.exceptional_exponents' depends on axioms: [propext, Quot.sound]
+
+[OK] CozeroSeries
+
+
+[OK] GapExponents
+'GapExponents.commonDivisors' depends on axioms: [propext, Quot.sound]
+
+[OK] RootSetTopology
+'RootSetTopology.complex_root_limits' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RootSetTopology.exterior_accumulation' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+[OK] AlgebraBridge
+'CozeroAlgebra.reciprocal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CozeroAlgebra.exceptional_root_set' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CozeroAlgebra.exceptional_no_finite_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+[OK] DivisorGrid
+'CozeroGrid.principal_membership' depends on axioms: [propext, Quot.sound]
+'CozeroGrid.exceptional_primes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CozeroGrid.all_maximal_cuts' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CozeroGrid.cut_parameter_unique' depends on axioms: [propext, Quot.sound]
+'CozeroGrid.divisor_rows' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CozeroGrid.mixed_comparability' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CozeroGrid.gcd_fibre_card' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CozeroGrid.mixed_card' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+[OK] CozeroLocalZeros
+
+
+[OK] CozeroMahler
+'CozeroSeries.exterior_transcendental' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+[OK] CozeroRadial
+
+
+[OK] ResidueModel
+'CozeroResidues.residue_cut_classification' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+[OK] CozeroLimitTheorem
+'CozeroLimitTheorem.geometry' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CozeroLimitTheorem.nonexceptional' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+[OK] CutCardinality
+'CozeroCardinality.mem_cutResidues' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CozeroCardinality.cut_card_eq_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CozeroCardinality.graph_eq_chain' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CozeroCardinality.residue_sets_enumerated' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CozeroCardinality.graph_reciprocal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CozeroCardinality.graph_exceptional_no_finite_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+[OK] GraphDefinition
+'CozeroGraph.all_sets_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CozeroGraph.graph_sum_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CozeroGraph.root_via_sections' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CozeroGraph.exceptional_graph_roots' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CozeroGraph.exceptional_graph_no_finite_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+[OK] GraphRootBridge
+
+
+[OK] CozeroCertificates
+CozeroGraph.exceptional_graph_roots (b : ℕ) :
+  {z | z ≠ 0 ∧ CozeroGraph.independentDominationPolynomial (2 ^ (b + 1) * 3) z = 0} = {-↑(b + 1)}
+CozeroGraph.exceptional_graph_no_finite_limit {index : ℕ → ℕ} (hi : StrictMono index) {roots : ℕ → ℂ}
+  (hr : ∀ (i : ℕ), roots i ≠ 0 ∧ CozeroGraph.independentDominationPolynomial (2 ^ (index i + 1) * 3) (roots i) = 0)
+  (z : ℂ) : ¬Tendsto roots atTop (𝓝 z)
+'CozeroCertificates.graph_limit_theorem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CozeroCertificates.graph_geometry' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CozeroGraph.exceptional_graph_roots' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CozeroGraph.exceptional_graph_no_finite_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+[OK] Python exact graph checks
+p=2, q=3, m=1, nonzero coefficients (exponent, count): [(1, 1), (2, 1)]
+p=2, q=3, m=2, nonzero coefficients (exponent, count): [(3, 2), (4, 1)]
+p=2, q=3, m=3, nonzero coefficients (exponent, count): [(7, 3), (8, 1)]
+p=2, q=3, m=4, nonzero coefficients (exponent, count): [(15, 4), (16, 1)]
+p=2, q=5, m=1, nonzero coefficients (exponent, count): [(1, 1), (4, 1)]
+p=2, q=5, m=2, nonzero coefficients (exponent, count): [(3, 1), (5, 1), (8, 1)]
+p=2, q=5, m=3, nonzero coefficients (exponent, count): [(7, 1), (11, 1), (13, 1), (16, 1)]
+p=2, q=5, m=4, nonzero coefficients (exponent, count): [(15, 1), (23, 1), (27, 1), (29, 1), (32, 1)]
+p=3, q=5, m=1, nonzero coefficients (exponent, count): [(2, 1), (4, 1)]
+p=3, q=5, m=2, nonzero coefficients (exponent, count): [(8, 1), (10, 1), (12, 1)]
+p=3, q=5, m=3, nonzero coefficients (exponent, count): [(26, 1), (32, 1), (34, 1), (36, 1)]
+p=3, q=7, m=1, nonzero coefficients (exponent, count): [(2, 1), (6, 1)]
+p=3, q=7, m=2, nonzero coefficients (exponent, count): [(8, 1), (14, 1), (18, 1)]
+p=5, q=7, m=1, nonzero coefficients (exponent, count): [(4, 1), (6, 1)]
+p=5, q=7, m=2, nonzero coefficients (exponent, count): [(24, 1), (28, 1), (30, 1)]
+p=2, q=5: -1.24923133 < outermost limit < -1.24923131 (exact rational enclosure)

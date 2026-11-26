@@ -1,0 +1,21 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>余零因子图主定理的 Lean 核验说明</title>
+<style>body{font:16px/1.8 "Microsoft YaHei",sans-serif;color:#252829;margin:0}main{max-width:900px;margin:42px auto;padding:0 24px 45px}h1,h2{color:#17484b;line-height:1.4}h1{font-size:1.85em}h2{font-size:1.24em;margin:1.7em 0 .4em}td,th{border-bottom:1px solid #c6d3d2;vertical-align:top;text-align:left;padding:.55em}table{border-collapse:collapse;width:100%}th{background:#edf4f3}a{color:#075e62}code{overflow-wrap:anywhere}li{margin:.45em 0}p{margin:.55em 0}</style>
+<main><h1>余零因子图主定理的 Lean 核验说明</h1>
+<p>Lean 4.19.0、mathlib v4.19.0。对固定素数 <i>p&lt;q</i> 与正整数 <i>m</i>，程序从模 <i>p<sup>m</sup>q</i> 的实际剩余类出发，定义余零因子图，再对所有独立支配集按大小求和，得到正文中的多项式。下表说明哪些命题已编译、还有哪些数学结论需查阅原文。</p>
+<h2>主定理的三个入口</h2><table><tr><th>要复核的断言</th><th>Lean 声明</th><th>需要输入的文献定理</th></tr>
+<tr><td>(2,3) 每阶的唯一非零根为 −m，沿任何严格递增的阶数序列均无有限极限。</td><td><code>CozeroGraph.exceptional_graph_roots</code> 与 <code>CozeroGraph.exceptional_graph_no_finite_limit</code></td><td>无。调用 Lean 和 mathlib 的基础结果。</td></tr>
+<tr><td>其余素数对的根集在 Hausdorff 距离下收敛；给出所有子列极限，证明圆外离散点的聚点集恰为整个单位圆。</td><td><code>CozeroCertificates.graph_geometry</code></td><td>Fuchs 扇区定理在系数全为 1 时的特例。</td></tr>
+<tr><td>上述结论以及每个圆外点都是超越数。</td><td><code>CozeroCertificates.graph_limit_theorem</code></td><td>上述 Fuchs 输入，加上素数底 <i>p</i> 下的 Mahler 取值定理。超越性本身的引理只需后者。</td></tr></table>
+<h2>从图定义到极限集</h2>
+<ol><li><b>图与算术。</b> 顶点为非零非单位元。图的邻接由两个元素在环中彼此均不可整除定义。程序遍历全部顶点子集，分别检验独立性和支配性，再证明这些集合恰好对应因子格的切分。由各 gcd 类的欧拉函数计数，推得稀疏倒数多项式。此处完全由代码推导，未把 Rather 的枚举当作前提。</li>
+<li><b>收敛和界。</b> 设 <i>c=q−p−1&gt;0</i>，指数 <i>e<sub>j</sub>=1+cp<sup>j</sup></i>。Lean 证明各有限截段在每个内闭圆盘上一致收敛到 <i>F(w)=1+∑ w<sup>eⱼ</sup></i>，极限解析且 <i>F(0)=1</i>。高次项控制排除了倒数根在单位圆内的极限；另证明整个根集一致有界。</li>
+<li><b>局部零点的存在。</b> 在极限函数零点周围取不含其他零点的小圆，圆周上的模有正下界。若某截段在整个闭盘无零点，其倒数满足最大模原理。截段在圆心趋零、在圆周仍离零有界，导致矛盾。这给出“每个充分大的阶数都有附近零点”，并完成从局部行为到全序列 Hausdorff 收敛的必要一步。论文用 Rouché 定理还得到小圆内零点重数的精确值；Lean 此处只证明主定理需要的存在性。</li>
+<li><b>边界和算术性质。</b> Lean 证明全部指数满足 <i>2e<sub>j+1</sub>≥3e<sub>j</sub></i>，据此调用外部扇区定理。结合紧子圆盘内零点有限、倒数变换和紧性，得出完整边界。再证明 <i>F(w)=1+wG<sub>p</sub>(w<sup>c</sup>)</i>；若盘内零点 <i>w</i> 为代数数，则 <i>G<sub>p</sub>(w<sup>c</sup>)=−1/w</i>，与下面的 Mahler 输入矛盾。</li></ol>
+<h2>两个外部输入的精确含义</h2>
+<p><code>CozeroLimitTheorem.FuchsUnitCoefficients</code> 接受任意自然数指数列，要求首指数正、相邻指数比至少 3/2，且单位圆盘内的对应级数解析。它断言加任意常数后，在每个开放角扇形内有无穷多零点。本文的系数都是 1，满足文献中的非衰减条件。Sons 第 515 页转述了 Fuchs 的扇区版本。<a href="https://msp.org/pjm/1972/43-2/pjm-v43-n2-p24-p.pdf">Sons 1972，第 515 页</a></p>
+<p><code>CozeroSeries.MahlerValues p</code> 断言在非零代数数 <i>s</i> 且 <i>|s|&lt;1</i> 时，<i>G<sub>p</sub>(s)=∑<sub>j≥0</sub>s<sup>pʲ</sup></i> 是超越数。引用的定理适用于任意整数底数至少 2。<a href="https://doi.org/10.1007/BF01454845">Mahler 1929</a> · <a href="https://publi.math.unideb.hu/paper/4104/download/10_5486_PMD_1994_1437.pdf">Becker 1994，第 269 页</a></p>
+<p>代码把这两项写成定理签名里的显式参数。最终的 <code>#print axioms</code> 只列出 Lean 的 <code>propext</code>、<code>Classical.choice</code> 与 <code>Quot.sound</code>。检查查新或复现时，应同时读定理的参数和公理列表。项目源文件没有 <code>sorry</code> 占位证明或自定义全局公理。</p>
+<h2>主定理以外</h2>
+<p>计重零点经验测度弱收敛到单位圆均匀测度，是正文应用 Hughes–Nikeghbali 判据得到的推论，此次未形式化。关于最外模上界何时取等及相位个数，正文给出循环群证明；Lean 核到其中对任意指数的公因子引理 <code>GapExponents.commonDivisors</code>。Python 另从图定义核对 15 个有限例，并用有理数证明 (2,5) 的最外点落在所给数值区间。<a href="https://arxiv.org/abs/math/0406376">Hughes–Nikeghbali</a></p>
+<p>原始问题及枚举可在以下两处核对。2026 年英文正式版的开放问题由出版商摘要确认，本次未获得其订阅正文。<a href="https://www.dmlett.com/archive/v13/DML24_v13_pp36-43.pdf">Rather 2024</a> · <a href="https://link.springer.com/article/10.1134/S0037446626060194">Rather 2026</a></p></main></html>

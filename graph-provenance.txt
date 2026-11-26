@@ -1,0 +1,61 @@
+Graph and arithmetic certificates
+Lean 4.19.0, mathlib v4.19.0
+
+Entry point: GraphDefinition.lean, namespace CozeroGraph.
+
+1. independentDominationPolynomial N z is defined without a factorization
+   of N. Its finite sum runs through subsets of the ordinary representatives
+   0,...,N-1. The membership test restricts each selected representative to
+   a nonzero nonunit in ZMod N, checks independence, and requires that every
+   vertex outside the set has a neighbor inside. Two vertices are adjacent
+   when neither divides the other in ZMod N. The summand is z to the size
+   of the selected subset.
+
+2. all_sets_eq identifies this family of subsets exactly with the images
+   of the m+1 divisor-grid cuts. The parameter is unique. The proof uses
+   divisibility of actual residues, the two-row factorization of divisors
+   of p^m*q, and the maximality of a cut in the product order. A fibre
+   over divisor d has totient(N/d) elements. The sizes of the fibres and
+   the sum over the two rows of each cut are proved in Lean.
+
+3. graph_sum_eq connects the finite powerset definition to the cut
+   polynomial. For arbitrary positive m, expressed in Lean as b+1,
+   root_via_sections identifies every nonzero complex root with a zero of
+   the reciprocal section. CozeroCardinality.graph_reciprocal supplies the
+   stronger equality of evaluations on nonzero inputs.
+
+4. exceptional_graph_roots gives the singleton {-m}. The theorem
+   exceptional_graph_no_finite_limit excludes convergence to every complex
+   number of every sequence of nonzero roots indexed by a strictly increasing
+   subsequence of m. Both statements start from the powerset definition. No
+   result from Rather, Fuchs, Mahler or a numerical computation is a hypothesis
+   of these algebraic and exceptional-case theorems.
+
+Dependencies in build order
+  CozeroChains
+  AlgebraBridge       (imports CozeroChains)
+  DivisorGrid         (imports CozeroChains)
+  ResidueModel        (imports DivisorGrid)
+  CutCardinality      (imports ResidueModel and AlgebraBridge)
+  GraphDefinition     (imports CutCardinality)
+
+Provenance of these six source files
+  CozeroChains.lean adapts a chain-weight certificate from an earlier
+  calculation in an earlier local working directory. Its proofs were recompiled.
+  A descriptive comment in the earlier copy counted the q-step switch
+  index in the opposite direction. In weight(p,q,m,t), t is the number
+  of p-steps AFTER the q-step. The change to the comment does not alter
+  any definitions or proof terms.
+  AlgebraBridge, DivisorGrid, ResidueModel, CutCardinality, and
+  GraphDefinition were developed for the present verification.
+  The ordinary mathlib lemmas used include ZMod.mul_inv_eq_gcd,
+  ZMod.isUnit_iff_coprime, Nat.dvd_prime_pow, Nat.totient_div_of_dvd,
+  Nat.totient_prime_pow_succ, Nat.totient_mul and Nat.totient_prime.
+
+Build with the project-wide Lake instructions supplied with the supplement.
+Preserve these unqualified module names when putting the files in a common
+Lake library. No locally compiled .olean or project-specific absolute paths
+are needed in a distribution. Each module prints the axiom dependencies of
+its main results. Only Lean's standard foundations (propositional extensionality,
+classical choice, and quotient soundness) occur across these results.
+
